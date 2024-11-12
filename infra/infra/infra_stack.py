@@ -396,7 +396,7 @@ class InfraStack(Stack):
             'mlflow-tracking-server',
             artifact_store_uri=f"s3://{mlflow_bucket.bucket_name}/{tracking_server_name}",
             automatic_model_registration=True,
-            mlflow_version='2.13.2',
+            mlflow_version='2.16',
             tracking_server_name=tracking_server_name,
             role_arn=mlflow_role.role_arn,
             tags=[

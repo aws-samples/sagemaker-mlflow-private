@@ -1,4 +1,2 @@
 aws-cdk-lib==2.162.1
-sagemaker-mlflow
-mlflow==2.16.2
 cdk-nag

@@ -462,7 +462,7 @@ class InfraStack(Stack):
             suppressions=[
                 {
                     "id": 'AwsSolutions-IAM5',
-                    "reason": 'part of an in-line policy which includes ALLOW and DENY as described in the docs'
+                    "reason": 'part of an in-line policy which includes ALLOW and DENY.'
                 }
             ]
         )

@@ -42,7 +42,7 @@ In order to communicate with the necessary AWS services privately, we are creati
 
 ### Roles and Permissions
 * SageMaker Execution Role
-  * Managed policy: AmazonSageMakerFullAccess
+  * Managed policy: AmazonSageMakerFullAccess (this policy is ok for a sample, transition to least privilege for a prod)
   * Inline policy: CodeArtifact
   * Inline policy: SageMaker-MLflow
 * SageMaker Managed MLflow service role

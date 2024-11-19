@@ -408,7 +408,10 @@ class InfraStack(Stack):
                     actions=[
                         "codeartifact:*",
                     ],
-                    resources=[codeartifact_domain.attr_arn]
+                    resources=[
+                        pip_private_codeartifact_repository.attr_arn,
+                        codeartifact_domain.attr_arn
+                    ]
                 ),
                 iam.PolicyStatement(
                     effect=iam.Effect.ALLOW,

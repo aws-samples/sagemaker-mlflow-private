@@ -24,7 +24,7 @@ class InfraStack(Stack):
         unique_hash = hashlib.sha256(unique_input.encode('utf-8')).hexdigest()[:10]
         suffix = unique_hash.lower()
 
-        accesslog_bucket_name = f"accesslogs-{suffix}-{self.account}-{self.region}"
+        accesslog_bucket_name = f"accesslogs-{suffix}"
 
         accesslog_bucket = s3.Bucket(
             self,
@@ -43,7 +43,7 @@ class InfraStack(Stack):
         sagemaker_bucket = s3.Bucket(
             self,
             'sm-data',
-            bucket_name=f"sagemaker-{suffix}-{self.account}-{self.region}",
+            bucket_name=f"sagemaker-{suffix}",
             auto_delete_objects=True,
             removal_policy=RemovalPolicy.DESTROY,
             block_public_access=s3.BlockPublicAccess(
@@ -253,7 +253,7 @@ class InfraStack(Stack):
         studio_execution_role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name('AmazonSageMakerFullAccess'))
 
         mlflow_bucket = s3.Bucket(self, 'sm-mlflow-data',
-            bucket_name=f"sagemaker-mlflow-{self.account}-{self.region}",
+            bucket_name=f"sagemaker-mlflow-{suffix}",
             auto_delete_objects=True,
             removal_policy=RemovalPolicy.DESTROY,
             block_public_access=s3.BlockPublicAccess(
@@ -266,18 +266,7 @@ class InfraStack(Stack):
             enforce_ssl=True,
             encryption=s3.BucketEncryption.KMS_MANAGED,
             server_access_logs_bucket=accesslog_bucket,
-            server_access_logs_prefix=f"mlflow-data-{suffix}"
-        )
-
-        mlflow_bucket.add_cors_rule(
-            allowed_methods=[
-                s3.HttpMethods.GET,
-                s3.HttpMethods.PUT,
-                s3.HttpMethods.POST,
-                s3.HttpMethods.DELETE
-            ],
-            allowed_origins=['*'],
-            allowed_headers=['*']
+            server_access_logs_prefix=f"mlflow-data"
         )
 
         mlflow_bucket.grant_read_write(studio_execution_role)
@@ -385,6 +374,17 @@ class InfraStack(Stack):
                 )
             ]
        )
+
+        mlflow_bucket.add_cors_rule(
+            allowed_methods=[
+                s3.HttpMethods.GET,
+                s3.HttpMethods.PUT,
+                s3.HttpMethods.POST,
+                s3.HttpMethods.DELETE
+            ],
+            allowed_origins=[f"https://{studio_domain.attr_domain_id}.sagemaker.aws"],
+            allowed_headers=['*']
+        )
 
         mlflow_role.attach_inline_policy(
             mlflow_policy

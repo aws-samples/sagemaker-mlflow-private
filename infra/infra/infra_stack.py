@@ -426,10 +426,21 @@ class InfraStack(Stack):
                     effect=iam.Effect.ALLOW,
                     actions=[
                         "codeartifact:*",
+                    ],
+                    resources=[codeartifact_domain.attr_arn]
+                ),
+                iam.PolicyStatement(
+                    effect=iam.Effect.ALLOW,
+                    actions=[
                         "sts:GetServiceBearerToken",
                         "sts:GetCallerIdentity"
                     ],
-                    resources=["*"]
+                    resources=["*"],
+                    conditions={
+                        "StringEquals": {
+                            "sts:AWSServiceName": "codeartifact.amazonaws.com"
+                        }
+                    }
                 ),
                 iam.PolicyStatement(
                     effect=iam.Effect.DENY,

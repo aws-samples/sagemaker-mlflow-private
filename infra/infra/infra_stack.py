@@ -286,27 +286,8 @@ class InfraStack(Stack):
             domain_settings=sagemaker.CfnDomain.DomainSettingsProperty(
                 docker_settings=sagemaker.CfnDomain.DockerSettingsProperty(
                     enable_docker_access="ENABLED",
-                    vpc_only_trusted_accounts=[ # see https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-available-images.html
-                        "885854791233",
-                        "137914896644",
-                        "053634841547",
-                        "542918446943",
-                        "238384257742",
-                        "523751269255",
-                        "245090515133",
-                        "064688005998",
-                        "022667117163",
-                        "648430277019",
-                        "010972774902",
-                        "481561238223",
-                        "545423591354",
-                        "819792524951",
-                        "021081402939",
-                        "856416204555",
-                        "175620155138",
-                        "810671768855",
-                        "567556641782",
-                        "564864627153"
+                    vpc_only_trusted_accounts=[
+                        # see https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-available-images.html
                     ]
                 ),
                 security_group_ids=[studio_security_group.security_group_id]

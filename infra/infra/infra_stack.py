@@ -574,5 +574,5 @@ class InfraStack(Stack):
         CfnOutput(self, "Security group ID", value=studio_security_group.security_group_id)
         CfnOutput(self, "Private Subnet 1 ID", value=vpc.private_subnets[0].subnet_id)
         CfnOutput(self, "Private Subnet 2 ID", value=vpc.private_subnets[1].subnet_id)
-        CfnOutput(self, "notebook bucket", value=f"s3://{sagemaker_bucket.bucket_name}")
+        CfnOutput(self, "Notebook Bucket", value=f"s3://{sagemaker_bucket.bucket_name}")
         CfnOutput(self, "MLflow tracking server ARN", value=tracking_server.attr_tracking_server_arn)
